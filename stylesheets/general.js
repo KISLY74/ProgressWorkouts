@@ -7,3 +7,10 @@ export const generalContainer = {
   justifyContent: 'space-between',
   backgroundColor: themes.first.colors.dark
 }
+
+export const generalHeader = {
+  fontSize: 28,
+  color: themes.first.colors.rare,
+  fontStyle: 'italic',
+  fontWeight: 'bold'
+}

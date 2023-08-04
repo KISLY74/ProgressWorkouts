@@ -1,10 +1,13 @@
 import { Text, View } from "react-native"
 import Navigation from "../../components/Navigation"
-import { generalContainer } from "../../stylesheets/general"
+import { generalContainer, generalHeader } from "../../stylesheets/general"
+import EditWorkouts from "./EditWorkouts"
+import Exercises from "../../components/Exercises"
 
 const EditScreen = ({ navigation }) => {
   return <View style={generalContainer}>
-    <Text>Edit page</Text>
+    <Text style={generalHeader}>Тренировка</Text>
+    <EditWorkouts />
     <Navigation navigation={navigation} route="EditScreen" />
   </View>
 }

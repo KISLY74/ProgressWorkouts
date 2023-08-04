@@ -1,12 +1,22 @@
-import { Text, View } from "react-native"
-import Navigation from "../../components/Navigation"
-import { generalContainer } from "../../stylesheets/general"
+import { StyleSheet, Text, SafeAreaView } from 'react-native';
+import Navigation from '../../components/Navigation';
+import Statistic from './Statistic';
+import themes from '../../config/themes';
+import { generalContainer, generalHeader } from '../../stylesheets/general';
 
 const StatisticScreen = ({ navigation }) => {
-  return <View style={generalContainer}>
-    <Text>Statistic page</Text>
+  return <SafeAreaView style={generalContainer}>
+    <Text style={generalHeader}>Статистика</Text>
+    <Statistic />
     <Navigation navigation={navigation} route="StatisticScreen" />
-  </View>
+  </SafeAreaView>
 }
+
+const styles = StyleSheet.create({
+  text: {
+    color: '#fff',
+    fontSize: 30,
+  }
+});
 
 export default StatisticScreen

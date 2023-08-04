@@ -4,7 +4,7 @@ import MaterialCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import themes from "../config/themes"
 
 const Navigation = ({ navigation, route }) => {
-  const setColor = (routeM) => route === routeM ? themes.first.colors.rare : "#fff"
+  const setColor = (routeM) => route === routeM ? themes.first.colors.rare : themes.first.colors.light
   const setStyle = (routeM) => route === routeM ? styles.selectedRoute : styles.icon
   return (
     <View style={styles.container}>
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   selectedRoute: {
     textAlign: 'center',
     borderRadius: 50,
-    padding: 10,
   },
   containerNav: {
     flexBasis: 80,

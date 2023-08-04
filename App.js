@@ -16,7 +16,8 @@ const config = {
   },
   headerBackVisible: false,
   headerShown: false,
-  animation: 'none'
+  animation: 'none',
+  // orientation: 'all'
 }
 
 export default function App() {
