@@ -3,6 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainScreen from './screens/MainScreen/MainScreen';
 import StatisticScreen from "./screens/StatisticScreen/StatisticScreen"
 import EditScreen from "./screens/EditScreen/EditScreen"
+import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import exercises from './config/exercises';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +24,14 @@ const config = {
 }
 
 export default function App() {
+
+  useEffect(() => {
+    (async function () {
+      await AsyncStorage.getItem('initExercises')
+        .then(async (data) => !data && await AsyncStorage.setItem('initExercises', JSON.stringify(exercises)))
+    }())
+  }, [])
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="MainScreen">
