@@ -1,40 +1,23 @@
-import { View, Dimensions, StyleSheet, Text, SafeAreaView } from 'react-native';
+import { View, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import themes from '../../config/themes';
-import { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Statistic = () => {
-
-  useEffect(() => {
-    // (async function () {
-    //   await AsyncStorage.multiGet('2023-08-03')
-    //     .then((data) => console.log("data: ", data))
-    // }())
-  }, [])
-
+const Statistic = ({ days, values }) => {
   return <SafeAreaView style={styles.container}>
     <View>
       <LineChart
         data={{
-          labels: ["January", "February", "March", "April", "May", "June"],
+          labels: days,
           datasets: [
             {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100
-              ]
+              data: values
             }
           ]
         }}
         width={Dimensions.get("window").width * 0.95}
         height={220}
-        yAxisLabel="$"
-        yAxisSuffix="k"
+        yAxisLabel=""
+        yAxisSuffix="кг"
         yAxisInterval={1}
         chartConfig={{
           backgroundGradientFrom: themes.first.colors.medium,
@@ -43,18 +26,17 @@ const Statistic = () => {
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
-            borderRadius: 16
+            borderRadius: 16,
           },
           propsForDots: {
             r: "6",
             strokeWidth: "2",
-            stroke: "#999"
+            stroke: '#999'
           }
         }}
-        bezier
         style={{
           marginVertical: 8,
-          borderRadius: 16
+          borderRadius: 16,
         }}
       />
     </View>

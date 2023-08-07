@@ -3,9 +3,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainScreen from './screens/MainScreen/MainScreen';
 import StatisticScreen from "./screens/StatisticScreen/StatisticScreen"
 import EditScreen from "./screens/EditScreen/EditScreen"
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import exercises from './config/exercises';
+import DataStore from "./store/DataStore"
+import { Context } from './screens/MainScreen/MainScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,12 +35,16 @@ export default function App() {
   }, [])
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="MainScreen">
-        <Stack.Screen name="MainScreen" component={MainScreen} options={config} />
-        <Stack.Screen name="StatisticScreen" component={StatisticScreen} options={config} />
-        <Stack.Screen name="EditScreen" component={EditScreen} options={config} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Context.Provider value={{
+      data: new DataStore()
+    }}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="MainScreen">
+          <Stack.Screen name="MainScreen" component={MainScreen} options={config} />
+          <Stack.Screen name="StatisticScreen" component={StatisticScreen} options={config} />
+          <Stack.Screen name="EditScreen" component={EditScreen} options={config} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Context.Provider>
   );
 }

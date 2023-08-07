@@ -2,7 +2,6 @@ import { Text, View } from "react-native"
 import Navigation from "../../components/Navigation"
 import { generalContainer, generalHeader } from "../../stylesheets/general"
 import EditWorkouts from "./EditWorkouts"
-import Exercises from "../../components/Exercises"
 
 const EditScreen = ({ navigation }) => {
   return <View style={generalContainer}>

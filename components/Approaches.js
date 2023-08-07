@@ -1,17 +1,50 @@
 import { StyleSheet, Text, View } from "react-native"
 import themes from "../config/themes"
+import Approache from "./Approache"
+import { useContext, useState } from "react"
+import { observer } from "mobx-react-lite"
+// import AntIcon from "react-native-vector-icons/AntDesign"
+import FontAwIcon from "react-native-vector-icons/FontAwesome"
+import { Button } from "@rneui/themed"
+import { Context } from "../screens/MainScreen/MainScreen"
+import EntypoIcon from "react-native-vector-icons/Entypo"
 
 const Approaches = ({ exercise, approaches }) => {
+  const { data } = useContext(Context)
+
   return <View style={styles.container}>
     <Text style={styles.title}>{exercise}</Text>
-    {approaches && approaches.map((appr, ind) =>
-      <View key={appr + ind} style={styles.approacheContainer}>
-        <Text style={styles.otherText}>{ind + 1}-й.</Text>
-        <Text style={styles.textItem}>{appr.times} раз</Text>
-        <Text style={styles.otherText}>-</Text>
-        <Text style={styles.textItem} key={appr}>{appr.weight} кг</Text>
-      </View>)}
-  </View>
+    <EntypoIcon
+      style={styles.menu}
+      name="dots-three-vertical"
+      size={25}
+      color={themes.first.colors.rare} />
+    {
+      approaches && approaches.map((appr, ind) =>
+        <Approache
+          key={JSON.stringify(appr) + ind}
+          appr={appr}
+          ind={ind} />)
+    }
+    <View style={{ flexDirection: 'row', width: '100%' }}>
+      {/* <Button
+        containerStyle={{ width: '50%' }}
+        buttonStyle={{ backgroundColor: themes.first.colors.veryDark }}
+        icon={<AntIcon
+          name="edit"
+          color={themes.first.colors.rare}
+          size={25}
+          style={{ textAlign: 'center', height: 25 }} />} /> */}
+      {data.isFormatting && <Button
+        containerStyle={{ width: '100%' }}
+        buttonStyle={{ backgroundColor: themes.first.colors.veryDark }}
+        icon={<FontAwIcon
+          name="trash-o"
+          color={themes.first.colors.rare}
+          size={25}
+          style={{ textAlign: 'center', height: 25 }} />} />} 
+    </View>
+  </View >
 }
 
 const styles = StyleSheet.create({
@@ -19,13 +52,6 @@ const styles = StyleSheet.create({
     backgroundColor: themes.first.colors.light,
     borderRadius: 10,
     margin: 5,
-  },
-  otherText: {
-    alignSelf: 'center',
-    fontSize: 20,
-    width: 50,
-    textAlign: 'center',
-    fontWeight: 'bold'
   },
   title: {
     width: '100%',
@@ -35,21 +61,11 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 20
   },
-  approacheContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    gap: 15,
-    padding: 10,
-  },
-  textItem: {
-    textAlign: 'center',
-    fontSize: 16,
-    width: 80,
-    backgroundColor: themes.first.colors.medium,
-    borderRadius: 50,
-    padding: 10,
-    color: '#fff'
+  menu: {
+    position: 'absolute',
+    right: 4,
+    top: 10
   }
 })
 
-export default Approaches
+export default observer(Approaches)

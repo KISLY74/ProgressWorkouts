@@ -11,7 +11,7 @@ const Exercises = () => {
       await AsyncStorage.getItem(new Date().toISOString().slice(0, 10))
         .then((data) => data && setExercises(Object.entries(JSON.parse(data))))
     }())
-  }, [AsyncStorage])
+  }, [AsyncStorage.getItem(new Date().toISOString().slice(0, 10))])
 
   return <View>
     <Text style={styles.title}>Упражнения</Text>

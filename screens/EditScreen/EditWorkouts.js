@@ -1,19 +1,36 @@
-import { ScrollView, StyleSheet, View } from "react-native"
+import { ScrollView, StyleSheet, View, ActivityIndicator } from "react-native"
 import themes from "../../config/themes";
-import exercises from "../../config/exercises"
-import ListExercises from "../../components/ListExercises";
 import Exercises from "../../components/Exercises";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import ListGroups from "../../components/ListGroups";
 
 const colors = themes.first.colors
 
 const EditWorkouts = () => {
+  const [tree, setTree] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    (async function () {
+      await AsyncStorage.getItem('initExercises')
+        .then((data) => setTree(JSON.parse(data)))
+        .finally(() => setIsLoading(true))
+    }())
+  }, [])
+
   return <View style={styles.container}>
-    <View style={{ gap: 10, marginBottom: 10 }}>
-      <ListExercises items={exercises.upperBody.breast} muscleGroup="Грудь" />
-      <ListExercises items={exercises.upperBody.back} muscleGroup="Спина" />
-      <ListExercises items={exercises.upperBody.biceps} muscleGroup="Бицепс" />
-      <ListExercises items={exercises.upperBody.triceps} muscleGroup="Трицепс" />
-    </View>
+    {isLoading ? <View style={{ gap: 10, marginBottom: 10 }}>
+      {tree && Object.keys(tree).map(highgroup =>
+        <ListGroups
+          key={highgroup}
+          groups={Object.entries(tree[highgroup])}
+          highgroupname={highgroup} />
+      )}
+    </View> : <ActivityIndicator
+      size="large"
+      style={{ margin: 50 }}
+      color={themes.first.colors.rare} />}
     <ScrollView>
       <Exercises />
     </ScrollView>

@@ -16,6 +16,8 @@
     "@rneui/themed": "^4.0.0-rc.8",
     "expo": "~49.0.5",
     "expo-status-bar": "~1.6.0",
+    "mobx": "^6.10.0",
+    "mobx-react-lite": "^4.0.3",
     "react": "18.2.0",
     "react-native": "0.72.3",
     "react-native-chart-kit": "^6.12.0",

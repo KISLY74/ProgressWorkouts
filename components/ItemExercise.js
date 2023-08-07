@@ -2,18 +2,15 @@ import { TouchableOpacity, StyleSheet, Text, View } from "react-native"
 import SelectIcon from "react-native-vector-icons/AntDesign"
 import themes from "../config/themes"
 import { useState } from "react"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import ModalApproache from "./ModalApproache"
 
-const ItemExercise = ({ item }) => {
-  const [isSelected, setIsSelected] = useState(false)
+const ItemExercise = ({ item, has }) => {
+  const [isSelected, setIsSelected] = useState(has)
   const [visible, setVisible] = useState(false)
 
   function addExercise() {
-    setIsSelected(!isSelected)
-
+    setIsSelected(true)
     setVisible(true)
-    // AsyncStorage.setItem()//!                                   <-----------
   }
 
   return <TouchableOpacity onPress={addExercise}>
@@ -35,8 +32,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderRadius: 50,
   },
   selectedContainer: {
@@ -51,7 +48,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     color: '#000',
-    fontSize: 18,
+    fontSize: 16,
     maxWidth: '90%'
   }
 })
