@@ -7,7 +7,7 @@ export const Context = React.createContext(null)
 
 const MainScreen = ({ navigation }) => {
   return <View style={generalContainer}>
-    <Text style={generalHeader}>Добро пожаловать</Text>
+    <Text style={[generalHeader, { flexGrow: 1 }]}>Добро пожаловать</Text>
     <Navigation navigation={navigation} route="MainScreen" />
   </View>
 }

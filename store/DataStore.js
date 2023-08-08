@@ -4,6 +4,8 @@ export default class DataStore {
   constructor() {
     this._isFormatting = false
     this._completeExercises = []
+    this._compositeEx = []
+    this._activeMuscleGroup = 'Жим гантелей на скамье'
     makeAutoObservable(this)
   }
   setIsFormatting(bool) {
@@ -15,10 +17,25 @@ export default class DataStore {
   clearCompleteExercises() {
     this._completeExercises = []
   }
+  clearCompositeEx() {
+    this._compositeEx = []
+  }
+  setCompositeEx(el) {
+    this._compositeEx.push(el)
+  }
+  setActiveMuslceGroup(group) {
+    this._activeMuscleGroup = group
+  }
+  get activeMuscleGroup() {
+    return this._activeMuscleGroup
+  }
   get isFormatting() {
     return this._isFormatting
   }
   get completeExercises() {
     return this._completeExercises
+  }
+  get compositeEx() {
+    return this._compositeEx
   }
 }

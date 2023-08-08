@@ -1,4 +1,4 @@
-import { Text, SafeAreaView, ActivityIndicator } from 'react-native';
+import { Text, SafeAreaView, ActivityIndicator, View } from 'react-native';
 import Navigation from '../../components/Navigation';
 import Statistic from './Statistic';
 import { generalContainer, generalHeader } from '../../stylesheets/general';
@@ -7,13 +7,15 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../MainScreen/MainScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import themes from '../../config/themes';
+import Select from '../../components/Select';
 
 const StatisticScreen = ({ navigation }) => {
   const { data } = useContext(Context)
   const [muslceGroup, setMuscleGroup] = useState("Жим гантелей на скамье")
-  const [vals, setVals] = useState([])
+  const [vals, setVals] = useState(data.completeExercises)
   const [days, setDays] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isData, setIsData] = useState(false)
 
   useEffect(() => {
     (async function () {
@@ -28,29 +30,44 @@ const StatisticScreen = ({ navigation }) => {
             await AsyncStorage.getItem(key)
               .then((dataRes) => {
                 Object.entries(JSON.parse(dataRes)).map(([ex, approaches]) => {
-                  if (ex === muslceGroup) {
-                    data.setCompleteExercises(approaches.reduce((acc, it) => {
-                      return acc + it.weight * it.times
-                    }, 0))
+                  if (JSON.parse(dataRes).hasOwnProperty(muslceGroup)) {
+                    setIsData(true)
+                    if (ex === muslceGroup) {
+                      data.setCompleteExercises(approaches.reduce((acc, it) => {
+                        return acc + it.weight * it.times
+                      }, 0))
+                    }
                   }
                 })
               })
             setVals(data.completeExercises)
           })
-        })
-        .finally(() => setIsLoading(true))
+          if (keys && keys.every(async key => {
+            await AsyncStorage.getItem(key).then((dataRes) => JSON.parse(dataRes).hasOwnProperty(muslceGroup))
+          })) setIsData(false)
+        }).finally(() => setIsLoading(true))
     }())
-  }, [data])
+  }, [data, muslceGroup])
 
   return <SafeAreaView style={generalContainer}>
     <Text style={generalHeader}>Статистика</Text>
-    {isLoading && vals.length !== 0 ? <Statistic days={days} values={vals} />
-      : <ActivityIndicator
-        size="large"
-        style={{ position: 'absolute', top: 230 }}
-        color={themes.first.colors.rare} />}
+    <View style={{ width: '100%', alignItems: 'center', flexGrow: 1 }}>
+      {isData ? isLoading && vals.length !== 0 ?
+        <Statistic days={days} values={vals} />
+        : <ActivityIndicator
+          size="large"
+          style={{ margin: 97 }}
+          color={themes.first.colors.light} /> :
+        <Text style={{
+          color: '#fff',
+          margin: 40,
+          fontSize: 20,
+          textAlign: 'center'
+        }}>Нет данных по данной группе мышц...</Text>}
+      <Select nameMuscle={muslceGroup} setMuscleGroup={setMuscleGroup} />
+    </View>
     <Navigation navigation={navigation} route="StatisticScreen" />
-  </SafeAreaView>
+  </SafeAreaView >
 }
 
 export default observer(StatisticScreen)

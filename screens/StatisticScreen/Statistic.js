@@ -4,51 +4,44 @@ import themes from '../../config/themes';
 
 const Statistic = ({ days, values }) => {
   return <SafeAreaView style={styles.container}>
-    <View>
-      <LineChart
-        data={{
-          labels: days,
-          datasets: [
-            {
-              data: values
-            }
-          ]
-        }}
-        width={Dimensions.get("window").width * 0.95}
-        height={220}
-        yAxisLabel=""
-        yAxisSuffix="кг"
-        yAxisInterval={1}
-        chartConfig={{
-          backgroundGradientFrom: themes.first.colors.medium,
-          backgroundGradientTo: themes.first.colors.medium2,
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          propsForDots: {
-            r: "6",
-            strokeWidth: "2",
-            stroke: '#999'
+    <LineChart
+      data={{
+        labels: days,
+        datasets: [
+          {
+            data: values
           }
-        }}
-        style={{
-          marginVertical: 8,
+        ]
+      }}
+      width={Dimensions.get("window").width * 0.95}
+      height={220}
+      yAxisLabel=""
+      yAxisSuffix="кг"
+      yAxisInterval={1}
+      chartConfig={{
+        backgroundGradientFrom: themes.first.colors.medium,
+        backgroundGradientTo: themes.first.colors.medium2,
+        decimalPlaces: 2,
+        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        style: {
           borderRadius: 16,
-        }}
-      />
-    </View>
+        },
+        propsForDots: {
+          r: "6",
+          strokeWidth: "2",
+          stroke: '#999'
+        }
+      }}
+    // style={{
+    // }}
+    />
   </SafeAreaView>
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    marginTop: 10,
   },
   text: {
     fontSize: 30,
