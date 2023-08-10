@@ -6,7 +6,6 @@ import { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../MainScreen/MainScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import themes from '../../config/themes';
 import Select from '../../components/Select';
 
 const StatisticScreen = ({ navigation }) => {
@@ -42,9 +41,11 @@ const StatisticScreen = ({ navigation }) => {
               })
             setVals(data.completeExercises)
           })
+
           if (keys && keys.every(async key => {
             await AsyncStorage.getItem(key).then((dataRes) => JSON.parse(dataRes).hasOwnProperty(muslceGroup))
           })) setIsData(false)
+
         }).finally(() => setIsLoading(true))
     }())
   }, [data, muslceGroup])
@@ -52,18 +53,15 @@ const StatisticScreen = ({ navigation }) => {
   return <SafeAreaView style={generalContainer}>
     <Text style={generalHeader}>Статистика</Text>
     <View style={{ width: '100%', alignItems: 'center', flexGrow: 1 }}>
-      {isData ? isLoading && vals.length !== 0 ?
-        <Statistic days={days} values={vals} />
-        : <ActivityIndicator
-          size="large"
-          style={{ margin: 97 }}
-          color={themes.first.colors.light} /> :
+      {isData && vals.length !== 0 ?
+        <Statistic days={days} values={vals} /> :
         <Text style={{
           color: '#fff',
           margin: 40,
+          marginVertical: 92,
           fontSize: 20,
           textAlign: 'center'
-        }}>Нет данных по данной группе мышц...</Text>}
+        }}>Нет данных по этому упражнению...</Text>}
       <Select nameMuscle={muslceGroup} setMuscleGroup={setMuscleGroup} />
     </View>
     <Navigation navigation={navigation} route="StatisticScreen" />

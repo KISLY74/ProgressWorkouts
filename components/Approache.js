@@ -1,36 +1,42 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
 import themes from "../config/themes"
 import { useContext, useState } from "react"
 import SelectIcon from "react-native-vector-icons/MaterialCommunityIcons"
 import { observer } from "mobx-react-lite"
 import { Context } from "../screens/MainScreen/MainScreen"
+import { Pressable } from "react-native"
 
 const unselectedIcon = 'checkbox-blank-circle-outline',
   selectedIcon = 'checkbox-marked-circle'
 
-const Approache = ({ appr, ind }) => {
+const Approache = ({ appr, ind, exercise }) => {
   const { data } = useContext(Context)
   const [nameIcon, setNameIcon] = useState(unselectedIcon)
 
   function selectApproache() {
-    if (data.isFormatting) {
-      nameIcon === unselectedIcon ? setNameIcon(selectedIcon) : setNameIcon(unselectedIcon)
+    if (data.getIsFormatting(exercise)) {
+      data.setSelectedApproaches(exercise, ind)
+      if (data.selectedApproaches[exercise]?.includes(ind)) {
+        setNameIcon(selectedIcon)
+      } else {
+        setNameIcon(unselectedIcon)
+      }
+      // nameIcon === unselectedIcon ? setNameIcon(selectedIcon) : setNameIcon(unselectedIcon)
     }
   }
 
-  return <TouchableOpacity
-    onLongPress={() => data.setIsFormatting(true)}
+  return <Pressable
+    onLongPress={() => data.setIsFormatting(exercise, true)}
     activeOpacity={0.5}
-    onPress={selectApproache}
-  >
-    <View key={appr + ind} style={styles.approacheContainer}>
-      {!data.isFormatting ? <Text style={styles.otherText}>{ind + 1}-й.</Text>
+    onPress={selectApproache}>
+    <View key={appr + ind} style={styles.approacheContainer} >
+      {!data.getIsFormatting(exercise) ? <Text style={styles.otherText}>{ind + 1}-й.</Text>
         : <SelectIcon name={nameIcon} size={25} color={themes.first.colors.rare} />}
       <Text style={styles.textItem}>{appr.times} раз</Text>
       <Text style={styles.otherText}>-</Text>
       <Text style={styles.textItem} key={appr}>{appr.weight} кг</Text>
     </View>
-  </TouchableOpacity >
+  </ Pressable>
 }
 
 const styles = StyleSheet.create({

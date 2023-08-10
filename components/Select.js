@@ -33,6 +33,7 @@ const Select = ({ nameMuscle, setMuscleGroup }) => {
     <ListItem.Accordion
       key={JSON.stringify(tree)}
       containerStyle={{
+        paddingVertical: 9,
         backgroundColor: themes.first.colors.veryDark,
       }}
       animation={{ duration: 200 }}
@@ -41,7 +42,7 @@ const Select = ({ nameMuscle, setMuscleGroup }) => {
           <ListItem.Title style={styles.title}>{nameMuscle}</ListItem.Title>
         </ListItem.Content>
       }
-      icon={<ArrowIcon name="downcircle" size={30} color={themes.first.colors.rare} />}
+      icon={<ArrowIcon name="downcircle" size={25} color={themes.first.colors.rare} />}
       isExpanded={expanded}
       onPress={() => setExpanded(!expanded)}>
       <View style={styles.containerList}>
@@ -66,7 +67,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: themes.first.colors.rare,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontSize: 18
   },
   containerList: {
     maxHeight: 200,

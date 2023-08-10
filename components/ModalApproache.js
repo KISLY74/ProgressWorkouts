@@ -2,11 +2,13 @@ import { Dialog } from "@rneui/themed"
 import { StyleSheet, Text, TextInput, View } from "react-native"
 import themes from "../config/themes"
 import { useState } from "react"
+import AntDesignIcon from "react-native-vector-icons/AntDesign"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const ModalApproache = ({ visible, toggle, exercise }) => {
   const [weight, setWeight] = useState(0)
   const [times, setTimes] = useState(0)
+  const [isShow, setIsShow] = useState(false)
 
   async function addApproache() {
     let dateStr = new Date().toISOString().slice(0, 10)
@@ -38,7 +40,15 @@ const ModalApproache = ({ visible, toggle, exercise }) => {
             })
         }
       })
-    console.log("date: ", dateStr, await AsyncStorage.getItem(dateStr))
+
+      setWeight(0)
+      setTimes(0)
+    setIsShow(true)
+
+    setTimeout(() => {
+      toggle()
+      setIsShow(false)
+    }, 600)
   }
 
   return <Dialog
@@ -69,7 +79,11 @@ const ModalApproache = ({ visible, toggle, exercise }) => {
       containerStyle={styles.containerBtn}
       style={styles.contentBtn}
       titleStyle={{ fontSize: 20 }}
-      title="Добавить"
+      title={!isShow && 'Добавить'}
+      icon={isShow && <AntDesignIcon
+        name="checkcircle"
+        size={30}
+        color={themes.first.colors.rare} />}
       onPress={addApproache} />
   </Dialog >
 }
