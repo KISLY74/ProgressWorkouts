@@ -48,25 +48,20 @@ const Approaches = ({ exercise, approaches }) => {
         appr={appr}
         ind={ind} />)}
     <View style={{ flexDirection: 'row', width: '100%' }}>
-      {data.getIsFormatting(exercise) ?
-        <Button
-          containerStyle={{ width: '100%' }}
-          buttonStyle={{ backgroundColor: themes.first.colors.veryDark }}
-          icon={<FontAwIcon
-            name="trash-o"
-            color={themes.first.colors.rare}
-            size={26}
-            style={{ textAlign: 'center', height: 26 }} />}
-          onPress={removeApproache} />
-        : <Button
-          containerStyle={{ width: '100%' }}
-          buttonStyle={{ backgroundColor: themes.first.colors.veryDark }}
-          onPress={() => setVisible(true)}
-          icon={<AntDesignIcon
+      <Button
+        containerStyle={{ width: '100%' }}
+        buttonStyle={{ backgroundColor: themes.first.colors.veryDark }}
+        icon={data.getIsFormatting(exercise) ? <FontAwIcon
+          name="trash-o"
+          color={themes.first.colors.rare}
+          size={26}
+          style={{ textAlign: 'center', height: 26 }} />
+          : <AntDesignIcon
             name="pluscircle"
             color={themes.first.colors.rare}
             size={26}
-            style={{ textAlign: 'center', height: 26 }} />} />}
+            style={{ textAlign: 'center', height: 26 }} />}
+        onPress={() => data.getIsFormatting(exercise) ? removeApproache() : setVisible(true)} />
     </View>
     <ModalApproache visible={visible} toggle={() => setVisible(!visible)} exercise={exercise} />
   </View>
@@ -76,7 +71,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: themes.first.colors.light,
     borderRadius: 10,
-    margin: 5,
+    marginBottom: 10
   },
   title: {
     width: '100%',
