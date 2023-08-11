@@ -13,15 +13,18 @@ const Statistic = ({ days, values }) => {
           }
         ]
       }}
+      // withInnerLines={false}
+      verticalLabelRotation={30}
       width={Dimensions.get("window").width * 0.95}
-      height={220}
-      yAxisLabel=""
+      height={320}
       yAxisSuffix="кг"
-      yAxisInterval={1}
       chartConfig={{
         backgroundGradientFrom: themes.first.colors.medium,
         backgroundGradientTo: themes.first.colors.medium2,
         decimalPlaces: 2,
+        propsForLabels: {
+          fontWeight: 'bold'
+        },
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         style: {
@@ -33,8 +36,6 @@ const Statistic = ({ days, values }) => {
           stroke: '#999'
         }
       }}
-    // style={{
-    // }}
     />
   </SafeAreaView>
 }
